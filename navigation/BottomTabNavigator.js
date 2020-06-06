@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
 import IngredientsScreen from '../screens/IngredientsScreen';
-import RecipesScreen from '../screens/Recipes';
+import RecipesScreen from '../screens/RecipesScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Ingredients';

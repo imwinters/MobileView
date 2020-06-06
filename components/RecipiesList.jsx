@@ -56,14 +56,14 @@ export default function Basic() {
         );
     }
 
-    const renderIngredient = data => (
+    const renderRecipe = data => (
         <TouchableHighlight
             onPress={ () => modifyIngredient(data)}
             style={styles.rowFront}
             underlayColor={'#AAA'}
         >
             <View>
-                <Text>Ingredient #{data.item.text}</Text>
+                <Text>Recipe #{data.item.text}</Text>
             </View>
         </TouchableHighlight>
     );
@@ -90,7 +90,7 @@ export default function Basic() {
         <View style={styles.container}>
             <SwipeListView
                 data={listData}
-                renderItem={renderIngredient}
+                renderItem={renderRecipe}
                 renderHiddenItem={renderHiddenButtons}
                 leftOpenValue={75}
                 rightOpenValue={-150}
