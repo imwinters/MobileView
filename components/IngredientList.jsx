@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     View,
+    Alert
 } from 'react-native';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -13,7 +14,7 @@ export default function Basic() {
     const [listData, setListData] = useState(
         Array(5)
             .fill('')
-            .map((_, i) => ({ key: `${i}`, text: `item #${i + 1}` }))
+            .map((_, i) => ({ key: `${i}`, text: `${i + 1}` }))
     );
 
     const closeRow = (rowMap, rowKey) => {
@@ -34,19 +35,40 @@ export default function Basic() {
         console.log('This row opened', rowKey);
     };
 
-    const renderItem = data => (
+    const modifyIngredient = (data) => {
+        createTwoButtonAlert(data);
+    }
+
+    const createTwoButtonAlert = (data) =>{
+        const {item} = data;
+        Alert.alert(
+        item.Text,
+        "Hell Yeah",
+        [
+            {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: false }
+        );
+    }
+
+    const renderIngredient = data => (
         <TouchableHighlight
-            onPress={() => console.log('You touched me')}
+            onPress={ () => modifyIngredient(data)}
             style={styles.rowFront}
             underlayColor={'#AAA'}
         >
             <View>
-                <Text>I am {data.item.text} in a SwipeListView</Text>
+                <Text>Ingredient #{data.item.text}</Text>
             </View>
         </TouchableHighlight>
     );
 
-    const renderHiddenItem = (data, rowMap) => (
+    const renderHiddenButtons = (data, rowMap) => (
         <View style={styles.rowBack}>
             <Text>Edit</Text>
             <TouchableOpacity
@@ -68,8 +90,8 @@ export default function Basic() {
         <View style={styles.container}>
             <SwipeListView
                 data={listData}
-                renderItem={renderItem}
-                renderHiddenItem={renderHiddenItem}
+                renderItem={renderIngredient}
+                renderHiddenItem={renderHiddenButtons}
                 leftOpenValue={75}
                 rightOpenValue={-150}
                 previewRowKey={'0'}
@@ -91,11 +113,11 @@ const styles = StyleSheet.create({
     },
     rowFront: {
         alignItems: 'center',
-        backgroundColor: '#CCC',
+        backgroundColor: 'white',
         borderBottomColor: 'black',
         borderBottomWidth: 1,
         justifyContent: 'center',
-        height: 50,
+        height: 60
     },
     rowBack: {
         alignItems: 'center',
@@ -111,7 +133,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         top: 0,
-        width: 75,
+        width:75,
     },
     backRightBtnLeft: {
         backgroundColor: 'blue',
